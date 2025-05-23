@@ -1,10 +1,13 @@
 const asyncHandler = require('express-async-handler');
+const Contact = require('../models/contactModel');
+
 //@desc Get all Contacts 
 //@route GET /api/Contacts 
 //@access public 
 
 const getContacts = asyncHandler (async (req , res )=>{
-    res.status(200).json({message: "Get all Contacts"});
+    const contacts = await Contact.find();
+    res.status(200).json(contacts);
 });
 
 //@desc Create new Contact 
@@ -17,21 +20,42 @@ const createContact = asyncHandler( async (req , res )=>{
         res.status(400);
         throw new Error("All Fields are mandatory !");
     }
-    res.status(201).json({message: "Create Contact"});
+    const contact = await Contact.create({name , email , phone});
+    res.status(201).json(contact);
 }); 
 
 //@desc Update Contact 
 //@route PUT /api/Contacts 
 //@access public 
 const updateContact = asyncHandler (async (req , res )=>{
-    res.status(200).json({message: `Update Contact for ${req.params.id}`});
+    const contact = await Contact.findById(req.params.id);
+    if(!contact){
+        res.status(400);
+        throw new Error("Contact not found");
+    }
+    const updatedContact = await Contact.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {new:true}
+    );
+
+    res.status(200).json(updatedContact);
 });
 
 //@desc Get individual Contact 
 //@route GET /api/Contacts 
 //@access public 
 const deleteContact = asyncHandler (async (req , res )=>{
-    res.status(200).json({message: `Delete Contact for ${req.params.id}`});
+    const contact = await Contact.findById(req.params.id);
+    console.log("Contact Found");
+    
+    if(!contact){
+        res.status(400);
+        throw new Error("Contact not found");
+    }
+    await contact.deleteOne();
+    console.log("deleted");
+    res.status(200).json(contact);
 });
 
 
@@ -39,7 +63,12 @@ const deleteContact = asyncHandler (async (req , res )=>{
 //@route GET /api/Contacts 
 //@access public 
 const getContact = asyncHandler (async (req , res )=>{
-    res.status(200).json({message: `Get Contact for ${req.params.id}`});
+    const contact = await Contact.findById(req.params.id);
+    if(!contact){
+        res.status(400);
+        throw new Error("Contact not found");
+    }
+    res.status(200).json(contact);
 });
 
 
