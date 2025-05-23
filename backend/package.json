@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "dotenv": "^16.5.0",
-    "express": "npm:Express@^3.0.1",
-    "Express": "^3.0.1",
-    "express-async-handler": "^1.2.0"
+    "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^8.15.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
