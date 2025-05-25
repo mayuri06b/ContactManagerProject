@@ -53,7 +53,7 @@ const loginUser = asyncHandler (async (req , res) => {
                 email : user.email
             },
         },
-        process.env.JWT_SECRET, {expiresIn:"1m"});
+        process.env.JWT_SECRET, {expiresIn:"15m"});
         res.status(202).json({accessToken});
     }else {
         res.status(401);
