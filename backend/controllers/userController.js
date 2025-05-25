@@ -53,7 +53,7 @@ const loginUser = asyncHandler (async (req , res) => {
                 email : user.email
             },
         },
-        process.env.JWT_SECRET, {expiresIn:"1M"});
+        process.env.JWT_SECRET, {expiresIn:"1m"});
         res.status(202).json({accessToken});
     }else {
         res.status(401);
@@ -66,9 +66,7 @@ const loginUser = asyncHandler (async (req , res) => {
 //@access private
 
 const currentUser = asyncHandler (async (req , res) => {
-    res.json({
-        message: "Current user !! "
-    });
+    res.json(req.user);
 });
 
 module.exports = {registerUser , loginUser , currentUser};
